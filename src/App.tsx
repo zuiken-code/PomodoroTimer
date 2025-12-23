@@ -1,4 +1,7 @@
-import { useState,useEffect } from 'react'
+import { useState,useEffect} from 'react'
+import FlipClockCountdown from '@leenguyen/react-flip-clock-countdown';
+import '@leenguyen/react-flip-clock-countdown/dist/index.css';
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -9,12 +12,11 @@ const STORAGE_KEY = "pomodoro-log-v1";
 interface TimerState {
   mode: TimerMode;
   duration: number;  
-  isRunning: boolean;
-  startedAt: number | null; // Date.now()
+  targetTime: number | null;
 }
 
 const DURATIONS: Record<TimerMode, number> = {
-  work: 25 * 60,
+  work: 0.1 * 60,
   break: 5 * 60,
   longBreak: 15 * 60,
 };
@@ -91,8 +93,7 @@ function App() {
   const [timer, setTimer] = useState<TimerState>({
   mode: "work",
   duration: DURATIONS.work,
-  isRunning: false,
-  startedAt: null
+  targetTime: null
 });
   const [logs, setLogs] = useState<WorkLog[]>(
   () => loadPersistedState().logs
@@ -127,7 +128,6 @@ function App() {
     ]);
   }
 
-
   return (
     <>
       <div>
@@ -148,6 +148,13 @@ function App() {
         </p>
         <p>{today}</p>
         <p>{categories[1].name}</p>
+         <FlipClockCountdown 
+          to={new Date().getTime() + timer.duration * 1000}
+          renderMap={[false, false, true, true]}
+          onComplete={() => {
+            console.log("カウントダウン終了");
+          }}
+         />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
