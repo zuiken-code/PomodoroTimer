@@ -99,6 +99,7 @@ function App() {
   const [logs, setLogs] = useState<WorkLog[]>(
   () => loadPersistedState().logs
 );
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
   savePersistedState(categories, logs);
@@ -182,6 +183,17 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
         <p>{today}</p>
+        <input
+        list="categories"
+        placeholder="作業内容を選択 / 入力"
+        value={selectedCategory.toString()}
+        onChange={e => setSelectedCategory(e.target.value)}
+        />
+        <datalist id="categories">
+          {categories.map(cat => (
+            <option key={cat.id} value={cat.name} />
+            ))}
+        </datalist>
         <p>{categories[1].name}</p>
          <FlipClockCountdown 
           to={new Date().getTime() + timer.duration * 1000}
