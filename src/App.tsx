@@ -6,7 +6,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-type TimerMode = "work" | "break" | "longBreak";
+type TimerMode = "work" | "break" | "longBreak"| "stop";
 const STORAGE_KEY = "pomodoro-log-v1";
 
 interface TimerState {
@@ -16,9 +16,10 @@ interface TimerState {
 }
 
 const DURATIONS: Record<TimerMode, number> = {
-  work: 0.1 * 60,
-  break: 5 * 60,
+  work: 0.2 * 60,
+  break: 0.1 * 60,
   longBreak: 15 * 60,
+  stop: 0
 };
 
 type WorkCategory = {
@@ -91,8 +92,8 @@ function App() {
   () => loadPersistedState().categories
 );
   const [timer, setTimer] = useState<TimerState>({
-  mode: "work",
-  duration: DURATIONS.work,
+  mode: "stop",
+  duration: DURATIONS.stop,
   targetTime: null
 });
   const [logs, setLogs] = useState<WorkLog[]>(
@@ -128,6 +129,40 @@ function App() {
     ]);
   }
 
+  function setFinished() {
+    if (timer.mode === "stop"){
+      return;
+    }else if(timer.mode === "work"){
+      setTimer({
+        mode: "break",
+        duration: DURATIONS.break,
+        targetTime: new Date().getTime() + DURATIONS.break * 1000
+      });
+    }else if(timer.mode === "break"){
+      setTimer({
+        mode: "work",
+        duration: DURATIONS.work,
+        targetTime: new Date().getTime() + DURATIONS.work * 1000
+      });
+    }
+  }
+
+  function startTimer(){
+    setTimer({
+      mode: "work",
+      duration: DURATIONS.work,
+      targetTime: new Date().getTime() + DURATIONS.work * 1000
+    });
+  }
+
+  function stopTimer(){
+    setTimer({
+      mode: "stop",
+      duration: DURATIONS.stop,
+      targetTime: null
+    });
+  }
+
   return (
     <>
       <div>
@@ -151,10 +186,14 @@ function App() {
          <FlipClockCountdown 
           to={new Date().getTime() + timer.duration * 1000}
           renderMap={[false, false, true, true]}
-          onComplete={() => {
-            console.log("カウントダウン終了");
-          }}
+          onComplete={() => setFinished()}
          />
+         <button onClick={() => startTimer()}>
+          スタート
+        </button>
+        <button onClick={() => stopTimer()}>
+          止める
+        </button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
