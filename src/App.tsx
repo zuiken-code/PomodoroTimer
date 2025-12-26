@@ -30,7 +30,7 @@ type WorkCategory = {
 interface WorkLog {
   date: string
   categoryId: number
-  numberOfTime: number
+  minutes: number
 }
 
 interface PersistedState {
@@ -86,6 +86,8 @@ function App() {
     targetTime: null
   })
 
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+
   // 🔑 入力中
   const [inputValue, setInputValue] = useState("")
   // 🔑 確定済み
@@ -97,24 +99,27 @@ function App() {
 
   // ===== カテゴリ確定 =====
   function confirmCategory() {
-    const name = inputValue.trim()
-    if (!name) {
-      alert("作業内容を入力してください")
-      return
-    }
-
-    const existing = categories.find(c => c.name === name)
-    if (existing) {
-      setSelectedCategory(existing.name)
-    } else {
-      const newCategory: WorkCategory = {
-        id: Date.now(),
-        name
-      }
-      setCategories(prev => [...prev, newCategory])
-      setSelectedCategory(name)
-    }
+  const name = inputValue.trim()
+  if (!name) {
+    alert("作業内容を入力してください")
+    return
   }
+
+  const existing = categories.find(c => c.name === name)
+  if (existing) {
+    setSelectedCategory(existing.name)
+    setSelectedCategoryId(existing.id)
+  } else {
+    const newCategory: WorkCategory = {
+      id: Date.now(),
+      name
+    }
+    setCategories(prev => [...prev, newCategory])
+    setSelectedCategory(name)
+    setSelectedCategoryId(newCategory.id)
+  }
+}
+
 
   // ===== タイマー制御 =====
   function startTimer() {
@@ -138,21 +143,60 @@ function App() {
     })
   }
 
-  function setFinished() {
-    if (timer.mode === "work") {
-      setTimer({
-        mode: "break",
-        duration: DURATIONS.break,
-        targetTime: Date.now() + DURATIONS.break * 1000
-      })
-    } else if (timer.mode === "break") {
-      setTimer({
-        mode: "work",
-        duration: DURATIONS.work,
-        targetTime: Date.now() + DURATIONS.work * 1000
-      })
+  function getTodayMinutesByCategory() {
+    const today = new Date().toISOString().slice(0, 10)
+
+    const todayLogs = logs.filter(log => log.date === today)
+
+    const minutesMap = new Map<number, number>()
+
+    for (const log of todayLogs) {
+      minutesMap.set(
+        log.categoryId,
+        (minutesMap.get(log.categoryId) ?? 0) + log.minutes
+      )
     }
+
+    return categories
+      .map(cat => ({
+        categoryName: cat.name,
+        minutes: minutesMap.get(cat.id) ?? 0
+      }))
+      .filter(item => item.minutes > 0)
   }
+
+
+
+  function setFinished() {
+  if (timer.mode === "work") {
+    if (!selectedCategoryId) return
+
+    const today = new Date().toISOString().slice(0, 10)
+
+    setLogs(prev => [
+      ...prev,
+      {
+        date: today,
+        categoryId: selectedCategoryId,
+        minutes: DURATIONS.work / 60
+      }
+    ])
+
+    setTimer({
+      mode: "break",
+      duration: DURATIONS.break,
+      targetTime: Date.now() + DURATIONS.break * 1000
+    })
+
+  } else if (timer.mode === "break") {
+    setTimer({
+      mode: "work",
+      duration: DURATIONS.work,
+      targetTime: Date.now() + DURATIONS.work * 1000
+    })
+  }
+}
+
 
   return (
     <>
@@ -201,6 +245,15 @@ function App() {
 
         <button onClick={startTimer}>スタート</button>
         <button onClick={stopTimer}>止める</button>
+        <h2>今日の作業時間</h2>
+
+        <ul>
+          {getTodayMinutesByCategory().map(item => (
+            <li key={item.categoryName}>
+              {item.categoryName}：{item.minutes} 分
+            </li>
+          ))}
+        </ul>
       </div>
     </>
   )
