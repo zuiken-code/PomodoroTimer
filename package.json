@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://zuiken-code.github.io/PomodoroTimer",
+  "homepage": "https://zuiken-code.github.io/PomodoroTimer/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
