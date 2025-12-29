@@ -4,9 +4,7 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Router basename="/PomodoroTimer">
-      <App />
-    </Router>
-  </React.StrictMode>
+  <Router basename={import.meta.env.DEV ? "/" : "/レポジトリ名/"}>
+    <App />
+  </Router>
 );
