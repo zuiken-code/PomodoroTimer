@@ -16,8 +16,8 @@ interface TimerState {
 }
 
 const DURATIONS: Record<TimerMode, number> = {
-  work: 0.2 * 60,
-  break: 0.1 * 60,
+  work: 25 * 60,
+  break: 5 * 60,
   longBreak: 15 * 60,
   stop: 0,
 };
@@ -205,15 +205,6 @@ function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" />
-        </a>
-      </div>
-
       <h1>Pomodoro</h1>
 
       <div className="card">
@@ -269,7 +260,7 @@ function App() {
         )}
 
         <button onClick={startTimer}>スタート</button>
-        <button onClick={stopTimer}>止める</button>
+        <button onClick={stopTimer}>やめる</button>
         <h2>今日の作業時間</h2>
 
         <ul>
