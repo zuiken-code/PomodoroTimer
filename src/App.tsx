@@ -109,7 +109,9 @@ function App() {
   function confirmCategory() {
     const name = inputValue.trim();
     if (!name) {
-      alert("作業内容を入力してください");
+      alert(
+        "作業内容を選択してください。\nまたは入力することで新規作成してください。\n 次回からは選択できるようになります。"
+      );
       return;
     }
 
@@ -131,7 +133,7 @@ function App() {
   // ===== タイマー制御 =====
   function startTimer() {
     if (!selectedCategory) {
-      alert("作業内容を確定してください");
+      alert("確定ボタンを押して作業内容を確定してください");
       return;
     }
 
