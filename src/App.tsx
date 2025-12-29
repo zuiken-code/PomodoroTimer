@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 type TimerMode = "work" | "break" | "longBreak" | "stop";
