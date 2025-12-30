@@ -4,14 +4,19 @@ import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 
 import "./App.css";
 
-type TimerMode = "work" | "break" | "longBreak" | "stop";
-const STORAGE_KEY = "pomodoro-log-v1";
+import { CategorySelector } from "./components/CategorySelector";
+import { TimerPanel } from "./components/TimerPanel";
+import { TodaySummary } from "./components/TodaySummary";
 
-interface TimerState {
-  mode: TimerMode;
-  duration: number;
-  targetTime: number | null;
-}
+import type {
+  WorkCategory,
+  WorkLog,
+  PersistedState,
+  TimerMode,
+  TimerState,
+} from "./types";
+
+const STORAGE_KEY = "pomodoro-log-v1";
 
 const DURATIONS: Record<TimerMode, number> = {
   work: 25 * 60,
@@ -19,22 +24,6 @@ const DURATIONS: Record<TimerMode, number> = {
   longBreak: 15 * 60,
   stop: 0,
 };
-
-type WorkCategory = {
-  id: number;
-  name: string;
-};
-
-interface WorkLog {
-  date: string;
-  categoryId: number;
-  minutes: number;
-}
-
-interface PersistedState {
-  categories: WorkCategory[];
-  logs: WorkLog[];
-}
 
 function roundDecimal(value: number, decimalPoint: number) {
   const x = 1 / decimalPoint;
@@ -71,8 +60,7 @@ function savePersistedState(categories: WorkCategory[], logs: WorkLog[]) {
 }
 
 function App() {
-  const today = new Date().toISOString().slice(0, 10);
-
+  const today = new Date().toLocaleDateString("sv-SE");
   const [categories, setCategories] = useState<WorkCategory[]>(
     () => loadPersistedState().categories
   );
@@ -94,7 +82,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = new Date().toLocaleDateString("sv-SE");
     // もし今日以外のログが混じっていたら、その場で消す
     if (logs.some((log) => log.date !== today)) {
       setLogs((prev) => prev.filter((l) => l.date === today));
@@ -151,8 +139,6 @@ function App() {
   }
 
   function getTodayMinutesByCategory() {
-    const today = new Date().toISOString().slice(0, 10);
-
     const todayLogs = logs.filter((log) => log.date === today);
 
     const minutesMap = new Map<number, number>();
@@ -175,8 +161,6 @@ function App() {
   function setFinished() {
     if (timer.mode === "work") {
       if (!selectedCategoryId) return;
-
-      const today = new Date().toISOString().slice(0, 10);
 
       setLogs((prev) => [
         ...prev,
@@ -203,62 +187,26 @@ function App() {
 
   return (
     <>
-      <h1>Pomodoro</h1>
+      <h1>PomodoroTime</h1>
 
       <div className="card">
         <p>{today}</p>
 
-        <input
-          list="categories"
-          placeholder="作業内容を入力 / 選択"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+        <CategorySelector
+          inputValue={inputValue}
+          confirmCategory={confirmCategory}
+          setInputValue={setInputValue}
+          categories={categories}
+          selectedCategory={selectedCategory}
         />
 
-        <button onClick={confirmCategory}>確定</button>
+        <TimerPanel
+          timer={timer}
+          setFinished={setFinished}
+          startTimer={startTimer}
+          stopTimer={stopTimer}
+        />
 
-        <datalist id="categories">
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.name} />
-          ))}
-        </datalist>
-
-        {selectedCategory && (
-          <p>
-            現在の作業：<strong>{selectedCategory}</strong>
-          </p>
-        )}
-
-        {timer.mode !== "stop" && (
-          <div
-            style={{
-              padding: "8px 16px",
-              borderRadius: "8px",
-              display: "inline-block",
-              margin: "10px 0",
-              fontWeight: "bold",
-              // モードによって背景色と文字色を変える
-              backgroundColor: timer.mode === "work" ? "#ffebee" : "#e8f5e9",
-              color: timer.mode === "work" ? "#d32f2f" : "#2e7d32",
-              border: `1px solid ${
-                timer.mode === "work" ? "#ffcdd2" : "#c8e6c9"
-              }`,
-            }}
-          >
-            {timer.mode === "work" ? "🚀 集中タイム" : "☕ 休憩タイム"}
-          </div>
-        )}
-
-        {timer.targetTime && (
-          <FlipClockCountdown
-            to={timer.targetTime}
-            renderMap={[false, false, true, true]}
-            onComplete={setFinished}
-          />
-        )}
-
-        <button onClick={startTimer}>スタート</button>
-        <button onClick={stopTimer}>やめる</button>
         <h2>今日の作業時間</h2>
 
         <ul>
