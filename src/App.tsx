@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 
 import "./App.css";
 
 import { CategorySelector } from "./components/CategorySelector";
 import { TimerPanel } from "./components/TimerPanel";
-import { TodaySummary } from "./components/TodaySummary";
 
 import type {
   WorkCategory,
