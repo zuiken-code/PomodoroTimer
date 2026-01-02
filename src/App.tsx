@@ -129,6 +129,25 @@ function App() {
   }
 
   function stopTimer() {
+    if (timer.mode === "work" && timer.targetTime && selectedCategoryId) {
+      const now = Date.now();
+      const totalMs = DURATIONS.work * 1000;
+      const remainingMs = timer.targetTime - now;
+
+      const elapasedMS = totalMs - remainingMs;
+      const elapsedMinutes = elapasedMS / 1000 / 60;
+
+      if (elapsedMinutes > 0.1) {
+        setLogs((prev) => [
+          ...prev,
+          {
+            date: today,
+            categoryId: selectedCategoryId,
+            minutes: roundDecimal(elapsedMinutes, 0.1),
+          },
+        ]);
+      }
+    }
     setTimer({
       mode: "stop",
       duration: 0,
@@ -185,7 +204,7 @@ function App() {
 
   return (
     <>
-      <h1>PomodoroTime</h1>
+      <h1>PomodoroTimer</h1>
 
       <div className="card">
         <p>{today}</p>
