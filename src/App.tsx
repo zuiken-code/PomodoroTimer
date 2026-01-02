@@ -74,6 +74,8 @@ function App() {
     null
   );
 
+  const [workCount, setWorkCount] = useState(0);
+
   // 🔑 入力中
   const [inputValue, setInputValue] = useState("");
   // 🔑 確定済み
@@ -179,6 +181,7 @@ function App() {
     if (timer.mode === "work") {
       if (!selectedCategoryId) return;
 
+      // 1. ログを保存
       setLogs((prev) => [
         ...prev,
         {
@@ -188,12 +191,28 @@ function App() {
         },
       ]);
 
-      setTimer({
-        mode: "break",
-        duration: DURATIONS.break,
-        targetTime: Date.now() + DURATIONS.break * 1000,
-      });
-    } else if (timer.mode === "break") {
+      // 2. 次の回数を計算して保存
+      const nextCount = workCount + 1;
+      setWorkCount(nextCount);
+
+      // 3. nextCount を使って休憩時間を決める
+      if (nextCount % 4 === 0) {
+        // 4, 8, 12回目...
+        setTimer({
+          mode: "longBreak",
+          duration: DURATIONS.longBreak,
+          targetTime: Date.now() + DURATIONS.longBreak * 1000,
+        });
+      } else {
+        // それ以外の休憩
+        setTimer({
+          mode: "break",
+          duration: DURATIONS.break,
+          targetTime: Date.now() + DURATIONS.break * 1000,
+        });
+      }
+    } else if (timer.mode === "break" || timer.mode === "longBreak") {
+      // 休憩終了 → 仕事開始
       setTimer({
         mode: "work",
         duration: DURATIONS.work,
@@ -204,7 +223,7 @@ function App() {
 
   return (
     <>
-      <h1>PomodoroTimer</h1>
+      <h2>PomodoroTimer</h2>
 
       <div className="card">
         <p>{today}</p>
