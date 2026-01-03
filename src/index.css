@@ -31,8 +31,11 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  /* 最小 1.8rem、最大 3.2rem。その間は画面幅に合わせて柔軟に変わる */
+  font-size: clamp(1.8rem, 10vw, 3.2rem);
   line-height: 1.1;
+  word-break: break-word; /* 単語が長すぎる時の保険 */
+  text-align: center; /* 中央寄せ */
 }
 
 button {

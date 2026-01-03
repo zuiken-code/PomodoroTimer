@@ -223,7 +223,7 @@ function App() {
 
   return (
     <>
-      <h2>PomodoroTimer</h2>
+      <h1>PomodoroTimer</h1>
 
       <div className="card">
         <p>{today}</p>
