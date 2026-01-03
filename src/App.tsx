@@ -7,6 +7,10 @@ import { CategorySelector } from "./components/CategorySelector";
 import { TimerPanel } from "./components/TimerPanel";
 import useSound from "use-sound";
 import alarmSound from "./assets/Clock-Alarm03-01(Mid-Loop) (mp3cut.net).mp3";
+import ReactGA from "react-ga4";
+
+// 測定IDを定数として定義
+const TRACKING_ID = "G-6R54R1XXNB";
 
 import type {
   WorkCategory,
@@ -60,6 +64,13 @@ function savePersistedState(categories: WorkCategory[], logs: WorkLog[]) {
 }
 
 function App() {
+  // アプリ起動時に初期化
+  useEffect(() => {
+    ReactGA.initialize(TRACKING_ID);
+    // ページビューを送信
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname });
+  }, []);
+
   const today = new Date().toLocaleDateString("sv-SE");
   const [categories, setCategories] = useState<WorkCategory[]>(
     () => loadPersistedState().categories
