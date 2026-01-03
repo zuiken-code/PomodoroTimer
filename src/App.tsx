@@ -153,6 +153,10 @@ function App() {
       alert("確定ボタンを押して作業内容を確定してください");
       return;
     }
+    ReactGA.event({
+      category: "Timer",
+      action: "タイマーを開始",
+    });
 
     setTimer({
       mode: "work",
