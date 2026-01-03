@@ -46,6 +46,7 @@ export function TimerPanel({
           />
         )}
       </div>
+      <br></br>
       <button onClick={startTimer}>スタート</button>
       <button onClick={stopTimer}>やめる</button>
     </>
