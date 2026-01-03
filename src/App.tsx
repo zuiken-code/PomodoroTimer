@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 
 import "./App.css";
 
 import { CategorySelector } from "./components/CategorySelector";
 import { TimerPanel } from "./components/TimerPanel";
+import useSound from "use-sound";
+import alarmSound from "./assets/Clock-Alarm03-01(Mid-Loop) (mp3cut.net).mp3";
 
 import type {
   WorkCategory,
@@ -81,6 +83,8 @@ function App() {
   // 🔑 確定済み
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  const [play, { stop }] = useSound(alarmSound, { loop: true, volume: 0.5 });
+
   useEffect(() => {
     const today = new Date().toLocaleDateString("sv-SE");
     // もし今日以外のログが混じっていたら、その場で消す
@@ -90,6 +94,22 @@ function App() {
     }
     savePersistedState(categories, logs);
   }, [categories, logs]);
+
+  const stopAlarm = useCallback(() => {
+    stop();
+
+    window.removeEventListener("click", stopAlarm);
+    window.removeEventListener("touchstart", stopAlarm);
+  }, [stop]);
+
+  // コンポーネントが消えるときに念のため音を止める（お作法）
+  useEffect(() => {
+    return () => {
+      stop();
+      window.removeEventListener("click", stopAlarm);
+      window.removeEventListener("touchstart", stopAlarm);
+    };
+  }, [stop, stopAlarm]);
 
   // ===== カテゴリ確定 =====
   function confirmCategory() {
@@ -178,6 +198,10 @@ function App() {
   }
 
   function setFinished() {
+    play();
+
+    window.addEventListener("click", stopAlarm);
+    window.addEventListener("touchstart", stopAlarm);
     if (timer.mode === "work") {
       if (!selectedCategoryId) return;
 
@@ -225,6 +249,11 @@ function App() {
     <>
       <h1>PomodoroTimer</h1>
 
+      <p>
+        タイマーが終了した時に音が鳴ります。
+        画面のどこかをタップ(クリック)することで止めることができます。
+      </p>
+
       <div className="card">
         <p>{today}</p>
 
@@ -253,6 +282,19 @@ function App() {
           ))}
         </ul>
       </div>
+
+      <footer style={{ marginTop: "20px", fontSize: "0.8rem", color: "#888" }}>
+        <p>
+          Sound by{" "}
+          <a
+            href="https://otologic.jp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            OtoLogic
+          </a>
+        </p>
+      </footer>
     </>
   );
 }
