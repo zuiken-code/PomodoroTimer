@@ -153,6 +153,10 @@ function App() {
       alert("確定ボタンを押して作業内容を確定してください");
       return;
     }
+    // 💡 Safari対策：ユーザーがボタンを押したこの瞬間に、一度再生・即停止させる
+    // これによって、このページは「音を出す許可」を得たことになります
+    play();
+    stop();
     ReactGA.event({
       category: "Timer",
       action: "タイマーを開始",
