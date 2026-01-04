@@ -40,3 +40,53 @@
 .read-the-docs {
   color: #888;
 }
+
+.pwa-install-guide {
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #f9f9f9; /* 背景色（お好みで調整） */
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  max-width: 500px;
+  text-align: center;
+}
+
+.pwa-install-guide h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.pwa-install-guide p {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: left;
+}
+
+.guide-item {
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.guide-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #007aff; /* Appleっぽい青色 */
+}
+
+/* スマホで縦に並べる設定 */
+@media (max-width: 400px) {
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+}

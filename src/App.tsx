@@ -303,6 +303,21 @@ function App() {
       </div>
 
       <footer style={{ marginTop: "20px", fontSize: "0.8rem", color: "#888" }}>
+        <div className="pwa-install-guide">
+          <h3>【アプリとして使う（推奨）】</h3>
+          <p>ホーム画面に追加すると、全画面で集中して使えます。</p>
+
+          <div className="guide-grid">
+            <div className="guide-item">
+              <strong>iPhone (Safari)</strong>
+              <span>「共有ボタン」→「ホーム画面に追加」</span>
+            </div>
+            <div className="guide-item">
+              <strong>Android / PC</strong>
+              <span>メニューから「インストール」</span>
+            </div>
+          </div>
+        </div>
         <p>
           Sound by{" "}
           <a
