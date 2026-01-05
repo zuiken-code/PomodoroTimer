@@ -309,11 +309,11 @@ function App() {
 
           <div className="guide-grid">
             <div className="guide-item">
-              <strong>iPhone (Safari)</strong>
+              <strong>iPhone / Android</strong>
               <span>「共有ボタン」→「ホーム画面に追加」</span>
             </div>
             <div className="guide-item">
-              <strong>Android / PC</strong>
+              <strong>PC</strong>
               <span>メニューから「インストール」</span>
             </div>
           </div>
