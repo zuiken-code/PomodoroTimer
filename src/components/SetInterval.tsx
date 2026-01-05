@@ -13,6 +13,8 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
         <div className="settings-section">
           <p>
             作業時間・休憩時間は 下記からタイマー停止中に自由に変更できます。
+            <br />
+            012みたいに0が先頭についちゃっても大丈夫です。
           </p>
           <p className="settings-title">タイマー設定 (分)</p>
           <div className="settings-grid">
@@ -23,7 +25,6 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
                 value={durations.work / 60}
                 onChange={(e) => {
                   const val = Number(e.target.value);
-                  if (val <= 0) return;
                   setDurations({
                     ...durations,
                     work: val * 60,
@@ -38,7 +39,6 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
                 value={durations.break / 60}
                 onChange={(e) => {
                   const val = Number(e.target.value);
-                  if (val <= 0) return;
                   setDurations({
                     ...durations,
                     break: val * 60,
@@ -53,7 +53,6 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
                 value={durations.longBreak / 60}
                 onChange={(e) => {
                   const val = Number(e.target.value);
-                  if (val <= 0) return;
                   setDurations({
                     ...durations,
                     longBreak: val * 60,

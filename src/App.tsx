@@ -279,16 +279,14 @@ function App() {
   return (
     <>
       <h1>PomodoroTimer</h1>
-
-      <p>
-        タイマーの流れについて<br></br>
-        作業 → 休憩 → 作業… を繰り返します。
-        作業を4回行うごとに、長い休憩に切り替わります。<br></br>
-        タイマーが終了した時に音が鳴ります。
-        画面のどこかをタップ(クリック)することで止めることができます。<br></br>※
-        iPhoneでは消音モードだと タイマー終了音が鳴りません
-      </p>
-
+      作業と休憩を交互に行うポモドーロタイマーです。
+      <br />
+      4回ごとに長い休憩が入ります。
+      <br />
+      終了時に音が鳴り、タップで止められます。
+      <br />
+      ※ iPhoneは消音モードでは音が鳴りません
+      <br />
       <div className="card">
         <p>{today}</p>
 
@@ -317,13 +315,11 @@ function App() {
           ))}
         </ul>
       </div>
-
       <SetInterval
         timer={timer}
         durations={durations}
         setDurations={setDurations}
       />
-
       <footer style={{ marginTop: "20px", fontSize: "0.8rem", color: "#888" }}>
         <div className="pwa-install-guide">
           <h3>【アプリとして使う（推奨）】</h3>
