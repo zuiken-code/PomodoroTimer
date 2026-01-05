@@ -85,7 +85,7 @@ button:focus-visible {
 
 .settings-title {
   font-size: 0.75rem;
-  color: #aaa;
+  color: #444;
   margin-bottom: 12px;
 }
 
@@ -99,7 +99,7 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   font-size: 0.7rem;
-  color: #888;
+  color: #333;
 }
 
 .setting-item input {
