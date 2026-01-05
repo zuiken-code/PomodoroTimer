@@ -126,6 +126,10 @@ function App() {
   function confirmCategory() {
     const name = inputValue.trim();
     if (!name) {
+      ReactGA.event({
+        category: "missed action",
+        action: "カテゴリ未選択で確定ボタンを押した",
+      });
       alert(
         "作業内容を選択してください。\nまたは入力することで新規作成してください。\n次回からは選択できるようになります。"
       );
@@ -150,6 +154,10 @@ function App() {
   // ===== タイマー制御 =====
   function startTimer() {
     if (!selectedCategory) {
+      ReactGA.event({
+        category: "missed action",
+        action: "カテゴリ未選択でタイマー開始しようとした",
+      });
       alert("確定ボタンを押して作業内容を確定してください");
       return;
     }
