@@ -76,3 +76,44 @@ button:focus-visible {
   align-items: center;
   gap: 8px;
 }
+
+.settings-section {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px dashed #ddd; /* 破線でさりげなく区切る */
+}
+
+.settings-title {
+  font-size: 0.75rem;
+  color: #aaa;
+  margin-bottom: 12px;
+}
+
+.settings-grid {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.setting-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+.setting-item input {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  text-align: center;
+  background: #fafafa;
+  font-size: 0.9rem;
+}
+
+.setting-item input:focus {
+  background: #fff;
+  border-color: #ccc;
+  outline: none;
+}

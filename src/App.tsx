@@ -318,8 +318,6 @@ function App() {
         </ul>
       </div>
 
-      <p>作業時間・休憩時間は 下記からタイマー停止中に自由に変更できます。</p>
-
       <SetInterval
         timer={timer}
         durations={durations}

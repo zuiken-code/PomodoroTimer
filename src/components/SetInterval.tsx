@@ -11,6 +11,9 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
     <>
       {timer.mode === "stop" && (
         <div className="settings-section">
+          <p>
+            作業時間・休憩時間は 下記からタイマー停止中に自由に変更できます。
+          </p>
           <p className="settings-title">タイマー設定 (分)</p>
           <div className="settings-grid">
             <div className="setting-item">
