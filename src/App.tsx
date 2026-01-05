@@ -5,6 +5,7 @@ import "./App.css";
 
 import { CategorySelector } from "./components/CategorySelector";
 import { TimerPanel } from "./components/TimerPanel";
+import { SetInterval } from "./components/SetInterval";
 import useSound from "use-sound";
 import alarmSound from "./assets/Clock-Alarm03-01(Mid-Loop) (mp3cut.net).mp3";
 import ReactGA from "react-ga4";
@@ -113,6 +114,9 @@ function App() {
     window.removeEventListener("touchstart", stopAlarm);
   }, [stop]);
 
+  // ===== タイマー設定 =====
+  const [durations, setDurations] = useState(DURATIONS);
+
   // コンポーネントが消えるときに念のため音を止める（お作法）
   useEffect(() => {
     return () => {
@@ -172,15 +176,15 @@ function App() {
 
     setTimer({
       mode: "work",
-      duration: DURATIONS.work,
-      targetTime: Date.now() + DURATIONS.work * 1000,
+      duration: durations.work,
+      targetTime: Date.now() + durations.work * 1000,
     });
   }
 
   function stopTimer() {
     if (timer.mode === "work" && timer.targetTime && selectedCategoryId) {
       const now = Date.now();
-      const totalMs = DURATIONS.work * 1000;
+      const totalMs = durations.work * 1000;
       const remainingMs = timer.targetTime - now;
 
       const elapasedMS = totalMs - remainingMs;
@@ -238,7 +242,7 @@ function App() {
         {
           date: today,
           categoryId: selectedCategoryId,
-          minutes: DURATIONS.work / 60,
+          minutes: durations.work / 60,
         },
       ]);
 
@@ -251,23 +255,23 @@ function App() {
         // 4, 8, 12回目...
         setTimer({
           mode: "longBreak",
-          duration: DURATIONS.longBreak,
-          targetTime: Date.now() + DURATIONS.longBreak * 1000,
+          duration: durations.longBreak,
+          targetTime: Date.now() + durations.longBreak * 1000,
         });
       } else {
         // それ以外の休憩
         setTimer({
           mode: "break",
-          duration: DURATIONS.break,
-          targetTime: Date.now() + DURATIONS.break * 1000,
+          duration: durations.break,
+          targetTime: Date.now() + durations.break * 1000,
         });
       }
     } else if (timer.mode === "break" || timer.mode === "longBreak") {
       // 休憩終了 → 仕事開始
       setTimer({
         mode: "work",
-        duration: DURATIONS.work,
-        targetTime: Date.now() + DURATIONS.work * 1000,
+        duration: durations.work,
+        targetTime: Date.now() + durations.work * 1000,
       });
     }
   }
@@ -277,8 +281,12 @@ function App() {
       <h1>PomodoroTimer</h1>
 
       <p>
+        タイマーの流れについて<br></br>
+        作業 → 休憩 → 作業… を繰り返します。
+        作業を4回行うごとに、長い休憩に切り替わります。<br></br>
         タイマーが終了した時に音が鳴ります。
-        画面のどこかをタップ(クリック)することで止めることができます。
+        画面のどこかをタップ(クリック)することで止めることができます。<br></br>※
+        iPhoneでは消音モードだと タイマー終了音が鳴りません
       </p>
 
       <div className="card">
@@ -309,6 +317,14 @@ function App() {
           ))}
         </ul>
       </div>
+
+      <p>作業時間・休憩時間は 下記からタイマー停止中に自由に変更できます。</p>
+
+      <SetInterval
+        timer={timer}
+        durations={durations}
+        setDurations={setDurations}
+      />
 
       <footer style={{ marginTop: "20px", fontSize: "0.8rem", color: "#888" }}>
         <div className="pwa-install-guide">
