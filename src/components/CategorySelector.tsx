@@ -17,14 +17,17 @@ export function CategorySelector({
 }: props) {
   return (
     <>
-      <input
-        list="categories"
-        placeholder="作業内容を入力 / 選択"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
-
-      <button onClick={confirmCategory}>確定</button>
+      <div className="input-group">
+        <input
+          list="categories"
+          placeholder="Type or Select Activity..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+        />
+        <button className="primary-btn" onClick={confirmCategory}>
+          CONFIRM
+        </button>
+      </div>
 
       <datalist id="categories">
         {categories.map((cat) => (
@@ -33,9 +36,9 @@ export function CategorySelector({
       </datalist>
 
       {selectedCategory && (
-        <p>
-          現在の作業：<strong>{selectedCategory}</strong>
-        </p>
+        <div className="current-activity">
+          Target: <strong>{selectedCategory}</strong>
+        </div>
       )}
     </>
   );

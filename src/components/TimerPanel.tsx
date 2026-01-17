@@ -20,21 +20,9 @@ export function TimerPanel({
       <div className="timer-panel">
         {timer.mode !== "stop" && (
           <div
-            style={{
-              padding: "8px 16px",
-              borderRadius: "8px",
-              display: "inline-block",
-              margin: "10px 0",
-              fontWeight: "bold",
-              // モードによって背景色と文字色を変える
-              backgroundColor: timer.mode === "work" ? "#ffebee" : "#e8f5e9",
-              color: timer.mode === "work" ? "#d32f2f" : "#2e7d32",
-              border: `1px solid ${
-                timer.mode === "work" ? "#ffcdd2" : "#c8e6c9"
-              }`,
-            }}
+            className={`status-badge ${timer.mode === "work" ? "mode-work" : "mode-break"}`}
           >
-            {timer.mode === "work" ? "🚀 集中タイム" : "☕ 休憩タイム"}
+            {timer.mode === "work" ? "⚡ FOCUS MODE" : "☕ BREAK TIME"}
           </div>
         )}
 
@@ -43,12 +31,22 @@ export function TimerPanel({
             to={timer.targetTime}
             renderMap={[false, false, true, true]}
             onComplete={setFinished}
+            className="flip-clock-wrapper"
           />
         )}
+
+        <div className="timer-controls">
+          {timer.mode === "stop" ? (
+            <button className="primary-btn" onClick={startTimer}>
+              START FOCUS
+            </button>
+          ) : (
+            <button className="danger-btn" onClick={stopTimer}>
+              STOP
+            </button>
+          )}
+        </div>
       </div>
-      <br></br>
-      <button onClick={startTimer}>スタート</button>
-      <button onClick={stopTimer}>やめる</button>
     </>
   );
 }

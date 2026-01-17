@@ -11,15 +11,14 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
     <>
       {timer.mode === "stop" && (
         <div className="settings-section">
-          <p>
-            作業時間・休憩時間は 下記からタイマー停止中に自由に変更できます。
-            <br />
-            012みたいに0が先頭についちゃっても大丈夫です。
+          <span className="settings-title">TIMER SETTINGS (MIN)</span>
+          <p className="settings-description">
+            フローをカスタマイズします。タイマーが停止している間に継続時間を編集します。
           </p>
-          <p className="settings-title">タイマー設定 (分)</p>
+
           <div className="settings-grid">
             <div className="setting-item">
-              <label>作業</label>
+              <label>WORK</label>
               <input
                 type="number"
                 value={durations.work / 60}
@@ -33,7 +32,7 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
               />
             </div>
             <div className="setting-item">
-              <label>休憩</label>
+              <label>SHORT BREAK</label>
               <input
                 type="number"
                 value={durations.break / 60}
@@ -47,7 +46,7 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
               />
             </div>
             <div className="setting-item">
-              <label>長い休憩</label>
+              <label>LONG BREAK</label>
               <input
                 type="number"
                 value={durations.longBreak / 60}
