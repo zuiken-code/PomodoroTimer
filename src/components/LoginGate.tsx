@@ -48,7 +48,10 @@ export function LoginGate({ onContinue }: Props) {
             Googleアカウントで続行
           </button>
 
-          <button className="text-link-btn" onClick={continueWithoutLogin}>
+          <button
+            className="secondary-outline-btn"
+            onClick={continueWithoutLogin}
+          >
             ログインせずに一時利用する
           </button>
         </div>
