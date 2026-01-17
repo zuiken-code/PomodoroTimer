@@ -35,9 +35,9 @@ export function SetInterval({ timer, durations, setDurations }: Props) {
     <>
       {timer.mode === "stop" && (
         <div className="settings-section">
-          <span className="settings-title">TIMER SETTINGS (MIN)</span>
+          <span className="settings-title">時間設定</span>
           <p className="settings-description">
-            ドラムを回して各時間を変更できます。
+            上もしくは下にある数字をタップして各時間を変更できます。
             <br />
             左から順に「集中時間」「休憩時間」「長めの休憩時間」です。
             <br />

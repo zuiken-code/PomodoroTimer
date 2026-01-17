@@ -38,7 +38,7 @@ export function TimerPanel({
         <div className="timer-controls">
           {timer.mode === "stop" ? (
             <button className="primary-btn" onClick={startTimer}>
-              START FOCUS
+              START
             </button>
           ) : (
             <button className="danger-btn" onClick={stopTimer}>
