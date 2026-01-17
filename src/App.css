@@ -234,3 +234,106 @@ button:active {
   border-color: var(--text-secondary);
   outline: none;
 }
+
+/* --- Login Gate: Professional Style --- */
+
+.login-gate-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #050505;
+  z-index: 2000;
+}
+
+.login-card {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.brand-logo h1 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1.4rem;
+  letter-spacing: 0.2em;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.login-subtitle {
+  color: #a1a1aa;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+/* Google Login Button */
+.google-login-btn {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 16px;
+}
+
+.google-login-btn:hover {
+  background: #f1f1f1;
+}
+
+.google-login-btn img {
+  width: 18px;
+  height: 18px;
+}
+
+/* Text Link Button */
+.text-link-btn {
+  background: none;
+  border: none;
+  color: #71717a;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.text-link-btn:hover {
+  color: #a1a1aa;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 16px;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+.login-footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.login-footer p {
+  font-size: 0.75rem;
+  color: #52525b;
+  line-height: 1.4;
+}
