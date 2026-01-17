@@ -9,18 +9,18 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDehioh8_S_6dX69UaNd7lhgKKKnlwWGUo",
-  authDomain: "pomodorotimer-ab787.firebaseapp.com",
-  projectId: "pomodorotimer-ab787",
-  storageBucket: "pomodorotimer-ab787.firebasestorage.app",
-  messagingSenderId: "1827120980",
-  appId: "1:1827120980:web:d25c0c2c88c0a43ae9cac1",
-  measurementId: "G-2YP66PZ03K",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 if (!firebaseConfig.apiKey) {
   console.error(
-    "APIキーが読み込めていません！.envかGitHub Secretsを確認してください。"
+    "APIキーが読み込めていません！.envかGitHub Secretsを確認してください。",
   );
 }
 
