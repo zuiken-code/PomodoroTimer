@@ -25,9 +25,24 @@ export default function Root() {
   }
 
   return (
-    <div style={{ position: "relative" }}>
-      {/* どのページでも右上に表示されるボタン */}
-      <AuthButton user={user} />
+    <div style={{ minHeight: "100vh", textAlign: "center" }}>
+      {/* ヘッダーエリア：要素を縦に並べる */}
+      <header
+        style={{
+          padding: "10px 0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center", // 中央寄せ
+          gap: "10px", // ボタンとタイトルの間の隙間
+        }}
+      >
+        {/* 1段目：ログインボタン/アイコン */}
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <AuthButton user={user} />
+        </div>
+      </header>
 
       <Routes>
         <Route path="/" element={<App user={user} />} />
