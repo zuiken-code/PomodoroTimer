@@ -11,11 +11,12 @@ export const AuthButton = ({ user }: AuthButtonProps) => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error(error);
-    }
+    navigate("/login");
+    // try {
+    //   await signInWithPopup(auth, googleProvider);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
 
   return (
@@ -46,7 +47,9 @@ export const AuthButton = ({ user }: AuthButtonProps) => {
           )}
         </div>
       ) : (
-        <button onClick={handleLogin}>ログイン</button>
+        <button onClick={handleLogin} className="btn-primary">
+          ログイン
+        </button>
       )}
     </div>
   );

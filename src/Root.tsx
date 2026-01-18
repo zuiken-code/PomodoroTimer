@@ -1,4 +1,4 @@
-import { LoginGate } from "./components/LoginGate";
+import { LoginGate } from "./pages/LoginGate";
 
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
@@ -48,6 +48,10 @@ export default function Root() {
         <Route path="/" element={<App user={user} />} />
         <Route path="/settings" element={<Settings user={user} />} />
         <Route path="*" element={<Navigate to="/" />} />
+        <Route
+          path="login"
+          element={<LoginGate onContinue={() => setIsAllowed(true)} />}
+        />
       </Routes>
     </div>
   );

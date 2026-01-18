@@ -19,12 +19,16 @@ export const Settings = ({ user }: SettingsProps) => {
 
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
-      <h2>設定</h2>
-      <p>{user.displayName}</p>
-      <button onClick={handleLogout}>ログアウト</button>
+      <h2>アカウント設定</h2>
+      <p>ユーザー名: {user.displayName}</p>
+      <button onClick={handleLogout} className="btn-danger">
+        ログアウト
+      </button>
       <br />
       <br />
-      <button onClick={() => navigate("/")}>戻る</button>
+      <button onClick={() => navigate("/")} className="btn-primary">
+        戻る
+      </button>
     </div>
   );
 };

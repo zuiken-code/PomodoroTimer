@@ -1,25 +1,37 @@
 import { auth } from "../firebase/firebaseConfig";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { googleProvider } from "../firebase/firebaseConfig";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   onContinue: () => void;
 }
 
 export function LoginGate({ onContinue }: Props) {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
 
   async function loginWithGoogle() {
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(auth, googleProvider);
+      navigate("/");
+      localStorage.setItem("skipLogin", "true");
       onContinue();
-    } catch (e: any) {
-      setError("認証に失敗しました。ネットワーク状況を確認してください。");
+    } catch (error) {
+      console.error(error);
     }
+    // try {
+    //   const provider = new GoogleAuthProvider();
+    //   await signInWithPopup(auth, provider);
+    //   onContinue();
+    // } catch (e: any) {
+    //   setError("認証に失敗しました。ネットワーク状況を確認してください。");
+    // }
   }
 
   function continueWithoutLogin() {
+    navigate("/");
     localStorage.setItem("skipLogin", "true");
     onContinue();
   }
@@ -30,12 +42,12 @@ export function LoginGate({ onContinue }: Props) {
         <div className="login-header">
           <div className="brand-logo">
             <span className="logo-icon">⚡</span>
-            <h1>NEURAL FOCUS</h1>
+            <h1>PomodoroTimer</h1>
           </div>
           <p className="login-subtitle">
-            ワークセッションを開始するために
+            googleアカウントでログインすることで
             <br />
-            アカウントを同期してください。
+            より快適に使用することができます。
           </p>
         </div>
 
@@ -59,7 +71,9 @@ export function LoginGate({ onContinue }: Props) {
         {error && <div className="error-message">{error}</div>}
 
         <div className="login-footer">
-          <p>同期することで、作業データのバックアップが可能になります。</p>
+          <p>
+            同期することで、作業データのバックアップが可能になります。(予定)
+          </p>
         </div>
       </div>
     </div>

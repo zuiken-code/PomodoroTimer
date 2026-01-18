@@ -117,3 +117,29 @@ button:focus-visible {
   border-color: #ccc;
   outline: none;
 }
+
+/* サインイン・設定画面用のボタン設定 */
+.btn-primary {
+  background-color: #646cff !important; /* Viteのテーマカラーに合わせる */
+  color: #ffffff !important; /* 文字を絶対白にする */
+}
+
+.btn-primary:hover {
+  background-color: #535bf2 !important;
+}
+
+.btn-danger {
+  background-color: #e91e63 !important; /* ログアウト用の赤系 */
+  color: #ffffff !important;
+}
+
+.btn-danger:hover {
+  background-color: #d81b60 !important;
+}
+
+/* 文字が見えにくい問題を強制解決 */
+.btn-primary,
+.btn-danger {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
