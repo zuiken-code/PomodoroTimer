@@ -1,6 +1,4 @@
-import { signInWithPopup } from "firebase/auth";
 import type { User } from "firebase/auth";
-import { auth, googleProvider } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 interface AuthButtonProps {

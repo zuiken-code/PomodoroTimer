@@ -1,5 +1,5 @@
 import { auth } from "../firebase/firebaseConfig";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../firebase/firebaseConfig";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ interface Props {
 
 export function LoginGate({ onContinue }: Props) {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   async function loginWithGoogle() {
     try {
@@ -19,6 +19,7 @@ export function LoginGate({ onContinue }: Props) {
       localStorage.setItem("skipLogin", "true");
       onContinue();
     } catch (error) {
+      setError("認証に失敗しました。ネットワーク状況を確認してください。");
       console.error(error);
     }
     // try {
