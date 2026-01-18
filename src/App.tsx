@@ -11,11 +11,8 @@ import alarmSound from "./assets/Clock-Alarm03-01(Mid-Loop) (mp3cut.net).mp3";
 import ReactGA from "react-ga4";
 
 // import { BrowserRouter, Routes, Route } from "react-router";
-import { onAuthStateChanged } from "firebase/auth";
 import type { User } from "firebase/auth";
-import { auth } from "./firebase/firebaseConfig";
 import { AuthButton } from "./components/AuthButton";
-// import { Settings } from "./pages/Settings";
 
 interface AppProps {
   user: User | null;
