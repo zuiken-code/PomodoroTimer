@@ -10,6 +10,17 @@ import useSound from "use-sound";
 import alarmSound from "./assets/Clock-Alarm03-01(Mid-Loop) (mp3cut.net).mp3";
 import ReactGA from "react-ga4";
 
+// import { BrowserRouter, Routes, Route } from "react-router";
+import { onAuthStateChanged } from "firebase/auth";
+import type { User } from "firebase/auth";
+import { auth } from "./firebase/firebaseConfig";
+import { AuthButton } from "./components/AuthButton";
+// import { Settings } from "./pages/Settings";
+
+interface AppProps {
+  user: User | null;
+}
+
 // 測定IDを定数として定義
 const TRACKING_ID = "G-6R54R1XXNB";
 
@@ -64,7 +75,7 @@ function savePersistedState(categories: WorkCategory[], logs: WorkLog[]) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({ categories, logs }));
 }
 
-function App() {
+export default function App({ user }: AppProps) {
   // アプリ起動時に初期化
   useEffect(() => {
     ReactGA.initialize(TRACKING_ID);
@@ -74,7 +85,7 @@ function App() {
 
   const today = new Date().toLocaleDateString("sv-SE");
   const [categories, setCategories] = useState<WorkCategory[]>(
-    () => loadPersistedState().categories
+    () => loadPersistedState().categories,
   );
   const [logs, setLogs] = useState<WorkLog[]>(() => loadPersistedState().logs);
 
@@ -85,7 +96,7 @@ function App() {
   });
 
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
+    null,
   );
 
   const [workCount, setWorkCount] = useState(0);
@@ -135,7 +146,7 @@ function App() {
         action: "カテゴリ未選択で確定ボタンを押した",
       });
       alert(
-        "作業内容を選択してください。\nまたは入力することで新規作成してください。\n次回からは選択できるようになります。"
+        "作業内容を選択してください。\nまたは入力することで新規作成してください。\n次回からは選択できるようになります。",
       );
       return;
     }
@@ -216,7 +227,7 @@ function App() {
     for (const log of todayLogs) {
       minutesMap.set(
         log.categoryId,
-        (minutesMap.get(log.categoryId) ?? 0) + log.minutes
+        (minutesMap.get(log.categoryId) ?? 0) + log.minutes,
       );
     }
 
@@ -278,6 +289,7 @@ function App() {
 
   return (
     <>
+      <AuthButton user={user} />
       <h1>PomodoroTimer</h1>
       作業と休憩を交互に行うポモドーロタイマーです。
       <br />
@@ -350,5 +362,3 @@ function App() {
     </>
   );
 }
-
-export default App;
