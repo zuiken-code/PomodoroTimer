@@ -286,16 +286,28 @@ export default function App({ user }: AppProps) {
 
   return (
     <>
-      <AuthButton user={user} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "1rem",
+        }}
+      >
+        <AuthButton user={user} />
+      </div>
       <h1>PomodoroTimer</h1>
-      作業と休憩を交互に行うポモドーロタイマーです。
-      <br />
-      4回ごとに長い休憩が入ります。
-      <br />
-      終了時に音が鳴り、タップで止められます。
-      <br />
-      ※ iPhoneは消音モードでは音が鳴りません
-      <br />
+      <p>
+        作業と休憩を交互に行うポモドーロタイマーです。
+        <br />
+        4回ごとに長い休憩が入ります。
+        <br />
+        終了時に音が鳴り、タップで止められます。
+        <br />
+        <span style={{ fontSize: "0.8rem", color: "var(--danger)" }}>
+          ※ iPhoneは消音モードでは音が鳴りません
+        </span>
+        <br />
+      </p>
       <div className="card">
         <p>{today}</p>
 
