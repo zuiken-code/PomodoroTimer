@@ -601,6 +601,14 @@ footer a:hover {
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
 }
 
+.google-login-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0; /* flexで縮まない */
+  flex-grow: 0; /* flexで拡大しない ← これが重要 */
+}
+
 .secondary-outline-btn {
   width: 100%;
   height: 50px;
