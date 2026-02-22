@@ -1,64 +1,101 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap");
+/* ============================================================
+   DARK THEME — iPhone対応改善版
+   主な修正:
+   1. backdrop-filter を実色ベースのsurface色に置き換え
+   2. グラデーション透明度を 0.12 → 0.35〜0.5 に引き上げ
+   3. surface色を知覚可能な値に
+   4. border を rgba白ではなく具体的な明度値で
+   5. shadow を spread + blur 二重構造に
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap");
 
 :root {
-  /* モダンダークテーマのカラーパレット */
-  --bg-base: #09090b;
-  --bg-gradient-1: rgba(56, 189, 248, 0.12); /* 控えめなスカイブルー */
-  --bg-gradient-2: rgba(129, 140, 248, 0.12); /* 控えめなインディゴ */
+  /* ─── ベース ─── */
+  --bg-base: #0a0a10;
 
-  /* すりガラス用のレイヤーカラー */
-  --surface-1: rgba(255, 255, 255, 0.03);
-  --surface-2: rgba(255, 255, 255, 0.06);
-  --surface-3: rgba(255, 255, 255, 0.1);
+  /* iPhone対応: 透明度を0.35〜0.5まで引き上げ、色を濃く */
+  --bg-gradient-1: rgba(56, 149, 248, 0.38);
+  --bg-gradient-2: rgba(139, 92, 246, 0.32);
+  --bg-gradient-3: rgba(16, 185, 129, 0.18);
 
-  --text-primary: #f8fafc;
+  /* ─── サーフェス: 実色+透明 の組み合わせに ─── */
+  /* 修正前: rgba(255,255,255,0.03) → 修正後: 混色で知覚可能に */
+  --surface-1: rgba(28, 28, 40, 0.92); /* iPhoneで消えない実色ベース */
+  --surface-2: rgba(38, 38, 56, 0.95);
+  --surface-3: rgba(52, 52, 72, 0.98);
+  --surface-hover: rgba(60, 60, 85, 1);
+
+  /* ─── テキスト ─── */
+  --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-tertiary: #64748b;
 
-  --accent-primary: #3b82f6;
-  --accent-primary-hover: #2563eb;
-  --accent-glow: rgba(59, 130, 246, 0.3);
+  /* ─── アクセント ─── */
+  --accent-primary: #60a5fa;
+  --accent-primary-hover: #3b82f6;
+  --accent-glow: rgba(96, 165, 250, 0.45); /* glow強化 */
 
-  --success: #10b981;
-  --success-glow: rgba(16, 185, 129, 0.25);
+  --success: #34d399;
+  --success-glow: rgba(52, 211, 153, 0.35);
 
-  --danger: #ef4444;
-  --danger-hover: #dc2626;
+  --danger: #f87171;
+  --danger-hover: #ef4444;
 
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-highlight: rgba(255, 255, 255, 0.15);
+  /* ─── ボーダー: 知覚可能な明度に ─── */
+  --border-subtle: rgba(255, 255, 255, 0.12); /* 0.08 → 0.12 */
+  --border-highlight: rgba(255, 255, 255, 0.22);
+  --border-accent: rgba(96, 165, 250, 0.4);
+
+  /* ─── シャドウ: 二重構造で深度を表現 ─── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.6), 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-glow-blue:
+    0 0 24px rgba(96, 165, 250, 0.3), 0 4px 12px rgba(0, 0, 0, 0.4);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  --shadow-lg:
-    0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
+/* ─── body ─── */
 body {
   margin: 0;
   padding: 0;
   background-color: var(--bg-base);
-  /* オーロラ風の美しい背景グラデーション */
+  /*
+    修正: グラデーション位置を大きく、opacity高く設定
+    iPhoneでは small + low-opacity の組み合わせが最も消えやすい
+  */
   background-image:
-    radial-gradient(circle at 15% 30%, var(--bg-gradient-1), transparent 35%),
-    radial-gradient(circle at 85% 70%, var(--bg-gradient-2), transparent 35%);
+    radial-gradient(
+      ellipse 80% 60% at 10% 20%,
+      var(--bg-gradient-1),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 70% 70% at 90% 80%,
+      var(--bg-gradient-2),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 50% 50%,
+      var(--bg-gradient-3),
+      transparent
+    );
   background-attachment: fixed;
   color: var(--text-primary);
   font-family:
-    "Inter",
+    "Syne",
     -apple-system,
     BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
     sans-serif;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* 中央より少し上に配置 */
+  align-items: flex-start;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -71,36 +108,51 @@ body {
   text-align: center;
 }
 
-/* --- タイポグラフィ --- */
+/* ─── タイポグラフィ ─── */
 h1 {
   font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   margin: 1rem 0;
-  /* 文字に美しいグラデーションを適用 */
-  background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 h2 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-secondary);
   margin-top: 2rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--border-subtle);
+  /* 修正: border-bottomをgradientで視覚的に強く */
+  border: none;
   padding-bottom: 0.5rem;
   text-align: left;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-highlight), transparent 80%);
 }
 
 p {
   color: var(--text-secondary);
-  line-height: 1.6;
-  font-size: 0.95rem;
+  line-height: 1.7;
+  font-size: 0.93rem;
   margin-bottom: 1rem;
 }
 
+/* ─── ul リスト ─── */
 ul {
   list-style: none;
   padding: 0;
@@ -109,27 +161,49 @@ ul {
 }
 
 ul li {
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
+  /* 修正: surface-1の実色ベースに */
   background: var(--surface-1);
   border-radius: var(--radius-md);
   margin-bottom: 0.5rem;
   color: var(--text-primary);
   font-size: 0.9rem;
-  border: 1px solid transparent;
-  transition: border 0.2s;
+  border: 1px solid var(--border-subtle);
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ul li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--accent-glow);
 }
 
 ul li:hover {
-  border-color: var(--border-subtle);
+  border-color: var(--border-accent);
   background: var(--surface-2);
+  transform: translateX(3px);
 }
 
-/* --- グラスモーフィズム カード --- */
+/* ─── カード ─── */
 .card {
+  /* 修正: backdropfilterに依存しない実色ベースの背景に */
   background: var(--surface-1);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  /* backdrop-filterは補助的に残す（対応デバイスのみ有効） */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
+  /* 上辺をアクセントカラーで */
+  border-top-color: rgba(96, 165, 250, 0.25);
   border-radius: var(--radius-xl);
   padding: 2.5rem 2rem;
   box-shadow: var(--shadow-lg);
@@ -138,7 +212,7 @@ ul li:hover {
   overflow: hidden;
 }
 
-/* カード上部の微細なハイライト（立体感） */
+/* カード内部グロー（背景から浮いて見せる） */
 .card::before {
   content: "";
   position: absolute;
@@ -148,13 +222,29 @@ ul li:hover {
   height: 1px;
   background: linear-gradient(
     90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
+    transparent 10%,
+    rgba(96, 165, 250, 0.6) 50%,
+    transparent 90%
   );
 }
 
-/* --- フォーム・入力 --- */
+/* カード右上の装飾的グロー */
+.card::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(
+    circle,
+    rgba(96, 165, 250, 0.12),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* ─── フォーム ─── */
 .input-group {
   display: flex;
   gap: 12px;
@@ -163,7 +253,7 @@ ul li:hover {
 
 .input-group input {
   flex: 1;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(10, 10, 20, 0.7);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 12px 16px;
@@ -171,23 +261,24 @@ ul li:hover {
   font-family: inherit;
   font-size: 0.95rem;
   outline: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s ease;
 }
 
 .input-group input:focus {
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+  background: rgba(10, 10, 25, 0.9);
 }
 
 .current-activity {
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
   background: var(--surface-2);
   padding: 12px 16px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--accent-primary);
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
@@ -199,58 +290,64 @@ ul li:hover {
   font-weight: 600;
 }
 
-/* --- ボタン --- */
+/* ─── ボタン ─── */
 button {
   background: var(--surface-2);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   padding: 12px 24px;
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.92rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   font-family: inherit;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  letter-spacing: 0.02em;
 }
 
 button:hover {
-  background: var(--surface-3);
+  background: var(--surface-hover);
+  border-color: var(--border-highlight);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 button:active {
   transform: translateY(1px);
+  box-shadow: none;
 }
 
 .primary-btn {
-  background: var(--accent-primary);
-  border: none;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: 1px solid rgba(96, 165, 250, 0.3);
   color: #fff;
-  font-weight: 600;
-  box-shadow: 0 4px 12px var(--accent-glow);
+  font-weight: 700;
+  box-shadow: var(--shadow-glow-blue);
+  letter-spacing: 0.03em;
 }
 
 .primary-btn:hover {
-  background: var(--accent-primary-hover);
-  box-shadow: 0 6px 16px var(--accent-glow);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow:
+    0 0 32px rgba(96, 165, 250, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .danger-btn {
   background: transparent;
-  border-color: rgba(239, 68, 68, 0.3);
+  border: 1px solid rgba(248, 113, 113, 0.3);
   color: var(--danger);
 }
 
 .danger-btn:hover {
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(248, 113, 113, 0.12);
   border-color: var(--danger);
-  color: var(--danger-hover);
 }
 
-/* --- タイマーパネル --- */
+/* ─── タイマーパネル ─── */
 .timer-panel {
   display: flex;
   flex-direction: column;
@@ -260,28 +357,31 @@ button:active {
 }
 
 .status-badge {
-  padding: 6px 16px;
-  border-radius: 999px; /* ピル形状 */
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  backdrop-filter: blur(8px);
 }
 
 .mode-work {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 0 20px var(--accent-glow);
+  background: rgba(59, 130, 246, 0.18);
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  box-shadow:
+    0 0 20px rgba(96, 165, 250, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .mode-break,
 .mode-longBreak {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  box-shadow: 0 0 20px var(--success-glow);
+  background: rgba(52, 211, 153, 0.18);
+  color: #6ee7b7;
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  box-shadow:
+    0 0 20px rgba(52, 211, 153, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .timer-controls {
@@ -292,20 +392,10 @@ button:active {
 }
 
 .timer-controls button {
-  flex: 1; /* ボタンの幅を均等に */
+  flex: 1;
 }
 
-/* FlipClock Customization */
-.flip-clock-wrapper {
-  font-family: "JetBrains Mono", monospace !important;
-  transform: scale(1.1); /* 少し大きくして見やすく */
-  margin: 1rem 0;
-}
-.flip-clock-divider {
-  display: none !important;
-}
-
-/* --- 設定セクション --- */
+/* ─── 設定 ─── */
 .settings-section {
   background: var(--surface-1);
   border: 1px solid var(--border-subtle);
@@ -316,11 +406,13 @@ button:active {
 }
 
 .settings-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
   margin-bottom: 1.5rem;
   display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .settings-grid {
@@ -336,13 +428,14 @@ button:active {
 }
 
 .setting-item label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .setting-item input {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(10, 10, 20, 0.6);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   padding: 10px;
@@ -350,23 +443,26 @@ button:active {
   text-align: center;
   font-family: "JetBrains Mono", monospace;
   font-size: 1.1rem;
-  transition: border-color 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .setting-item input:focus {
-  border-color: var(--text-secondary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
   outline: none;
 }
 
-/* --- フッター & PWAガイド --- */
+/* ─── フッター ─── */
 footer {
   margin-top: 4rem;
   color: var(--text-tertiary);
 }
 
 .pwa-install-guide {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px dashed var(--border-subtle);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -374,9 +470,11 @@ footer {
 }
 
 .pwa-install-guide h3 {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-primary);
   margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .guide-grid {
@@ -387,9 +485,10 @@ footer {
 }
 
 .guide-item {
-  background: var(--surface-1);
+  background: var(--surface-2);
   padding: 12px;
   border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -416,19 +515,19 @@ footer a {
 
 footer a:hover {
   color: var(--text-primary);
-  border-color: var(--text-primary);
+  border-color: var(--text-secondary);
 }
 
-/* --- ログインゲート (モーダル風) --- */
+/* ─── ログインゲート ─── */
 .login-gate-container {
   position: fixed;
   inset: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(5, 5, 15, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 2000;
 }
 
@@ -440,7 +539,9 @@ footer a:hover {
   width: 100%;
   max-width: 400px;
   text-align: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 60px rgba(96, 165, 250, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -458,7 +559,7 @@ footer a:hover {
     var(--accent-primary),
     transparent
   );
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 .brand-logo h1 {
@@ -470,7 +571,7 @@ footer a:hover {
 
 .login-subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.93rem;
   margin-bottom: 2.5rem;
 }
 
@@ -482,21 +583,22 @@ footer a:hover {
   justify-content: center;
   gap: 12px;
   background: #ffffff;
-  color: #000000;
+  color: #111111;
   border: none;
   border-radius: var(--radius-md);
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   transition:
     transform 0.2s,
     box-shadow 0.2s;
   margin-bottom: 1rem;
+  letter-spacing: 0.02em;
 }
 
 .google-login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
 }
 
 .secondary-outline-btn {
@@ -506,15 +608,15 @@ footer a:hover {
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   border-radius: var(--radius-md);
-  font-size: 0.95rem;
-  font-weight: 500;
+  font-size: 0.93rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .secondary-outline-btn:hover {
   background: var(--surface-2);
-  border-color: var(--text-secondary);
+  border-color: var(--border-highlight);
 }
 
 .login-footer {
@@ -524,12 +626,12 @@ footer a:hover {
 }
 
 .login-footer p {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-tertiary);
   margin: 0;
 }
 
-/* レスポンシブ調整 */
+/* ─── レスポンシブ ─── */
 @media (max-width: 480px) {
   #root {
     padding: 1.5rem 1rem;
