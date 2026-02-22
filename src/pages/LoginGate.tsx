@@ -56,7 +56,15 @@ export function LoginGate({ onContinue }: Props) {
           <button className="google-login-btn" onClick={loginWithGoogle}>
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-              alt=""
+              alt="Google"
+              style={{
+                width: "20px",
+                height: "20px",
+                objectFit: "contain",
+                flexShrink: 0,
+                flexGrow: 0,
+                display: "block",
+              }}
             />
             Googleアカウントで続行
           </button>
