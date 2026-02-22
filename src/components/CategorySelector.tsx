@@ -25,7 +25,7 @@ export function CategorySelector({
           onChange={(e) => setInputValue(e.target.value)}
         />
         <button className="primary-btn" onClick={confirmCategory}>
-          CONFIRM
+          確定
         </button>
       </div>
 
@@ -37,7 +37,7 @@ export function CategorySelector({
 
       {selectedCategory && (
         <div className="current-activity">
-          Target: <strong>{selectedCategory}</strong>
+          タスク: <strong>{selectedCategory}</strong>
         </div>
       )}
     </>
