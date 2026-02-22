@@ -28,6 +28,7 @@ import type {
   TimerMode,
   TimerState,
 } from "./types";
+import { TodaySummary } from "./components/TodaySummary";
 
 const STORAGE_KEY = "pomodoro-log-v1";
 
@@ -326,15 +327,10 @@ export default function App({ user }: AppProps) {
           stopTimer={stopTimer}
         />
 
-        <h2>今日の作業時間</h2>
-
-        <ul>
-          {getTodayMinutesByCategory().map((item) => (
-            <li key={item.categoryName}>
-              {item.categoryName}：{roundDecimal(item.minutes, 0.1)} 分
-            </li>
-          ))}
-        </ul>
+        <TodaySummary
+          getTodayMinutesByCategory={getTodayMinutesByCategory}
+          roundDecimal={roundDecimal}
+        />
       </div>
       <SetInterval
         timer={timer}

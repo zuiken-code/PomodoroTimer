@@ -22,13 +22,6 @@ export function LoginGate({ onContinue }: Props) {
       setError("認証に失敗しました。ネットワーク状況を確認してください。");
       console.error(error);
     }
-    // try {
-    //   const provider = new GoogleAuthProvider();
-    //   await signInWithPopup(auth, provider);
-    //   onContinue();
-    // } catch (e: any) {
-    //   setError("認証に失敗しました。ネットワーク状況を確認してください。");
-    // }
   }
 
   function continueWithoutLogin() {
@@ -54,6 +47,7 @@ export function LoginGate({ onContinue }: Props) {
 
         <div className="login-body">
           <button className="google-login-btn" onClick={loginWithGoogle}>
+            {/* ✅ Fix: style属性でサイズを確実に固定。CSSだけだとSafariで効かない場合がある */}
             <img
               src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
               alt="Google"

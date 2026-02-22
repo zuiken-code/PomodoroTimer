@@ -8,7 +8,66 @@
    5. shadow を spread + blur 二重構造に
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap");
+
+/* ─── グローバルフォントリセット ─── */
+/*
+  button / input / select はブラウザのUser Agent Stylesheetが
+  font-family: system-ui を強制するため、bodyのfont-familyを継承しない。
+  ここで明示的に上書きする。
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family:
+    "Syne",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+/* ─── タイマー数字: JetBrains Mono 強制適用 ─── */
+.flip-clock-wrapper,
+.flip-clock-wrapper * {
+  font-family: "JetBrains Mono", "Courier New", monospace !important;
+  letter-spacing: -0.01em;
+}
+
+/* FlipClock の Minutes / Seconds ラベルはSyneで */
+.flip-clock-wrapper .flip-clock-divider .flip-clock-label {
+  font-family: "Syne", "Noto Sans JP", sans-serif !important;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ─── Googleボタン: 日本語対応フォントを明示 ─── */
+.google-login-btn {
+  font-family:
+    "Syne",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif !important;
+}
+.secondary-outline-btn {
+  font-family:
+    "Syne",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif !important;
+}
 
 :root {
   /* ─── ベース ─── */
@@ -89,6 +148,7 @@ body {
   color: var(--text-primary);
   font-family:
     "Syne",
+    "Noto Sans JP",
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
@@ -111,7 +171,7 @@ body {
 /* ─── タイポグラフィ ─── */
 h1 {
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.03em;
   margin: 1rem 0;
   background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
@@ -586,6 +646,12 @@ footer a:hover {
   color: #111111;
   border: none;
   border-radius: var(--radius-md);
+  font-family:
+    "Syne",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
@@ -594,19 +660,24 @@ footer a:hover {
     box-shadow 0.2s;
   margin-bottom: 1rem;
   letter-spacing: 0.02em;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+/* Googleロゴを確実にサイズ固定 */
+.google-login-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: block;
 }
 
 .google-login-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
-}
-
-.google-login-btn img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  flex-shrink: 0; /* flexで縮まない */
-  flex-grow: 0; /* flexで拡大しない ← これが重要 */
 }
 
 .secondary-outline-btn {
@@ -616,6 +687,12 @@ footer a:hover {
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   border-radius: var(--radius-md);
+  font-family:
+    "Syne",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
   font-size: 0.93rem;
   font-weight: 600;
   cursor: pointer;
